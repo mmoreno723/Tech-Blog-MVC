@@ -1,0 +1,18 @@
+{{#each blogs as |blog|}}
+  <div class="card text-left mb-5 ml-5 mr-5">
+    <div class="card-header">
+      <h2>
+        <a href="/blogpost/{{id}}">{{title}} </a>
+      </h2>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{body}}</p>
+    </div>
+    <div class="card-footer text-muted">Posted by:
+      {{user.name}}
+      on
+      {{format_date createdAt}}
+      at
+      {{format_time createdAt}}</div>
+  </div>
+{{/each}}
