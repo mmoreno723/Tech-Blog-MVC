@@ -9,7 +9,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1%;
-  background-color: #13293d;
+  background-color: black;
   color: #fff;
 }
 
@@ -48,7 +48,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 1%;
-  background-color: #13293d;
+  background-color: black;
   color: #fff;
 }
 .card-body {

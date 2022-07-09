@@ -1,13 +1,10 @@
 const postComment = async (event) => {
   event.preventDefault();
 
-  const blogPostId = document.querySelector('input[name="blogpost-id"]').value;
-  const comment = document.querySelector('textarea[name="comment-add"]').value;
+  const blogPostId = document.querySelector("#id").textContent;
+  const comment = document.querySelector("#comment").value.trim();
 
-  console.log(blogPostId);
-  console.log(comment);
-
-  if (comment) {
+  if (comment && blogPostId) {
     const response = await fetch("/api/comments", {
       method: "POST",
       body: JSON.stringify({
@@ -19,11 +16,13 @@ const postComment = async (event) => {
       },
     });
     if (response.ok) {
-      document.location.reload();
+      document.location.replace(`/blog/${blogPostId}`);
     } else {
       alert(`Failed to post comment.`);
     }
   }
 };
 
-document.querySelector(".commentBtn").addEventListener("click", postComment);
+document
+  .querySelector("#add-content-form")
+  .addEventListener("submit", postComment);
