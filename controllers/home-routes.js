@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User, Blog, Comment } = require("../models");
+const withAuth = require("../utils/auth");
 
 router.get("/", async (req, res) => {
   try {
@@ -56,6 +57,33 @@ router.get("/dashboard", withAuth, async (req, res) => {
       loggedIn: true,
     });
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// renders new blog section
+router.get("/dashboard/new", withAuth, async (req, res) => {
+  try {
+    res.render("newBlog", { loggedIn: req.session.loggedIn });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// renders edit blog section
+router.get("/dashboard/edit/:id", withAuth, async (req, res) => {
+  try {
+    const blogData = await Blog.findByPk(req.params.id, {
+      include: [
+        {
+          model: Comment,
+          include: [User],
+        },
+        { model: User, attributes: ["username"] },
+      ],
+    });
+    const blog = blogData.get({ plain: true });
+    res.render("editBlog", { ...blog, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
