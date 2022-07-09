@@ -1,47 +1,36 @@
 <html lang="en">
+
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tech Blog</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
+
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
-        <a class="navbar-brand text-light">Tech Blog</a>
-        <div>
-          <div class="navbar">
-            <a class="nav-link text-light" href="/">Home
-              <span class="sr-only">(current)</span></a>
-            <a class="nav-link text-light" href="/dashboard">Dashboard</a>
-            {{#if loggedIn}}
-              <button
-                class="logout-btn rounded-pill border-0 bg-danger text-light"
-              >Log Out</button>
-              <script src="/js/logout.js"></script>
-            {{else}}
-              <a class="nav-link text-light" href="/login">Log In</a>
-            {{/if}}
-          </div>
-        </div>
+      <h1>Tech Blog</h1>
+      <nav>
+        <ul>
+          <li><a href="/" class="nav-page">Home</a></li>
+          <li><a href="/dashboard" class="nav-page">Dashboard</a></li>
+          {{#if loggedIn}}
+            <li><button id="logout">Logout</button></li>
+          {{else}}
+            <li><a href="/login" class="nav-page">Login</a></li>
+          {{/if}}
+        </ul>
       </nav>
-      <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4 text-center">Tech Blog</h1>
-        </div>
-      </div>
     </header>
     <main>
-      <div class="card-container">
+      <div class="main-page">
         {{{body}}}
       </div>
     </main>
+    {{#if loggedIn}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
   </body>
+
 </html>

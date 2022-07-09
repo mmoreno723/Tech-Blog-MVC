@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { User, Blog, Comment } = require("../models");
-// const withAuth = require("../utils/auth");
 
 router.get("/", async (req, res) => {
   try {
@@ -15,7 +14,7 @@ router.get("/", async (req, res) => {
 
     const blogs = blogData.map((blogpost) => blogpost.get({ plain: true }));
 
-    res.render("allBlogPost", {
+    res.render("homepage", {
       blogs,
       loggedIn: req.session.loggedIn,
     });
@@ -23,32 +22,38 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// Get one blog by id
 router.get("/blogpost/:id", async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
-          model: User,
-          attributes: { exclude: ["password"] },
-        },
-        {
           model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: { exclude: ["password"] },
-            },
-          ],
+          include: [User],
         },
+        { model: User, attributes: ["username"] },
       ],
     });
+    const blog = blogData.get({ plain: true });
+    res.render("blog", { ...blog, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+// gets blogs in dashboard
+router.get("/dashboard", withAuth, async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ["password"] },
+      include: [{ model: Blog }],
+    });
 
-    const singleBlogPost = blogData.get({ plain: true });
+    const user = userData.get({ plain: true });
 
-    res.render("singleBlogPost", {
-      singleBlogPost,
-      loggedIn: req.session.loggedIn,
+    res.render("dashboard", {
+      ...user,
+      loggedIn: true,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -61,6 +66,14 @@ router.get("/login", (req, res) => {
     return;
   }
   res.render("login");
+});
+
+router.get("/signup", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+  res.render("signup");
 });
 
 module.exports = router;

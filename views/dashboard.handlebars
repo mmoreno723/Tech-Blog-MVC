@@ -1,0 +1,30 @@
+{{#each blogs as |blog|}}
+  <div class="row">
+    <a href="/blog/{{blog.id}}"><div class="card">
+        <div class="card-header">
+          <div>
+            {{blog.title}}
+          </div>
+          <div>
+            <p>Created by you on
+              {{format_date blog.createdAt}}</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <blockquote>
+            <p>{{blog.content}}</p>
+          </blockquote>
+        </div>
+      </div></a>
+    <div class="col-md-4">
+      <button class="btn edit-btn" data-id="{{blog.id}}">EDIT</button>
+      <button
+        class="btn-danger delete-btn"
+        data-id="{{blog.id}}"
+      >DELETE</button>
+    </div>
+  </div>
+{{/each}}
+<button class="add-blog">New Blog</button>
+
+<script src="/js/dashboard.js"></script>
