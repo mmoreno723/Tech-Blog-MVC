@@ -4,49 +4,45 @@ const withAuth = require("../../utils/auth");
 
 router.post("/", withAuth, async (req, res) => {
   try {
-    const newBlogPost = await Blog.create({
-      title: req.body.blogTitle,
-      content: req.body.blogBody,
+    const newBlog = await Blog.create({
+      ...req.body,
       user_id: req.session.user_id,
     });
-    res.status(200).json(newBlogPost);
+
+    res.status(200).json(newBlog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 });
-
+// Update blog after editing
 router.put("/:id", withAuth, async (req, res) => {
   try {
-    const updateBlogData = await Blog.update(req.body, {
-      where: { id: req.params.id },
+    const newBlog = await Blog.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
     });
-
-    if (!updateBlogData) {
-      res
-        .status(404)
-        .json({ message: "Could not find a blog post with this id" });
-      return;
-    } else {
-      res.status(200).json(updateBlogData);
-    }
+    res.status(200).json(newBlog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 });
-
+// delete blog by id based on user choice
 router.delete("/:id", withAuth, async (req, res) => {
   try {
-    const deleteBlogData = await Blog.destroy({
-      where: { id: req.params.id },
+    const blogData = await Blog.destroy({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
     });
 
-    if (!deleteBlogData) {
-      res
-        .status(404)
-        .json({ message: "Could not find a blog post with this id" });
-    } else {
-      res.status(200).json(deleteBlogData);
+    if (!blogData) {
+      res.status(404).json({ message: "No blog found with this id!" });
+      return;
     }
+
+    res.status(200).json(blogData);
   } catch (err) {
     res.status(500).json(err);
   }

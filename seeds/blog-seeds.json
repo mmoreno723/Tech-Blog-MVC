@@ -2,5 +2,9 @@
   {
     "title": "Test",
     "content": "testing testing"
+  },
+  {
+    "title": "A new test",
+    "content": "this is a new test"
   }
 ]

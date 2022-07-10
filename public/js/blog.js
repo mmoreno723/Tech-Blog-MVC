@@ -3,7 +3,7 @@ const newBlog = async (event) => {
   const title = document.querySelector("#blog-title").value.trim();
   const content = document.querySelector("#blog-content").value.trim();
   if (title && content) {
-    const response = await fetch(`/api/blogs`, {
+    const response = await fetch(`/api/blogposts`, {
       method: "POST",
       body: JSON.stringify({ title, content }),
       headers: {

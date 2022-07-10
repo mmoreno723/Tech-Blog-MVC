@@ -9,7 +9,7 @@ const oldBlogHandler = async (event) => {
   console.log("Id is", id);
 
   if (title && content && id) {
-    const response = await fetch(`/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogposts/${id}`, {
       method: "PUT",
       body: JSON.stringify({ id, title, content }),
       headers: {

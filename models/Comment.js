@@ -11,9 +11,10 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    body: {
+    comment_content: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "",
     },
     blog_id: {
       type: DataTypes.INTEGER,
