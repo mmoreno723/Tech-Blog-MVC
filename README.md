@@ -34,5 +34,7 @@ You may use this to publish articles, blog posts, or any thoughts or opinions in
 
 ## Heroku Deployment Link
 
+https://enigmatic-garden-98743.herokuapp.com/
+
 ## Credits
 Thank you to third party websites like MDN and W3 for providing me with lots of information to complete this assignment. Thank you as well to MySql and Handlebars for providing the necessary functionality for this application to work
